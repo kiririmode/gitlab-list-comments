@@ -1,0 +1,44 @@
+query mergeRequestComments(
+  $mergeRequestId: MergeRequestID!
+  $discussionAfter: String
+) {
+  mergeRequest(id: $mergeRequestId) {
+    title
+    createdAt
+    mergedAt
+    author {
+      id
+      name
+    }
+    approvedBy(first: 100) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+    discussions(first: 100, after: $discussionAfter) {
+      edges {
+        node {
+          notes {
+            nodes {
+              id
+              system
+              author {
+                id
+                name
+              }
+              body
+              url
+            }
+          }
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+}

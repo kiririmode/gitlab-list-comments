@@ -1,0 +1,24 @@
+query mergeRequestIds(
+  $fullPath: ID!
+  $targetBranches: [String!]
+  $afterMergeRequest: String
+) {
+  project(fullPath: $fullPath) {
+    id
+    mergeRequests(
+      state: merged
+      targetBranches: $targetBranches
+      after: $afterMergeRequest
+    ) {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      edges {
+        node {
+          id
+        }
+      }
+    }
+  }
+}
